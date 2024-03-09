@@ -99,17 +99,46 @@ function createMap(earthquakeData) {
     });
 
 
+    var grayscaleMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 18,
+        id: "light-v10",
+        accessToken: API_KEY
+    });
+
+    var darkMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 18,
+        id: "dark-v10",
+        accessToken: API_KEY
+    });
+
+    // Define a baseMaps object to hold our base layers
+    var baseMaps = {
+        "Outdoor Map": streetMap,
+        "Grayscale Map": grayscaleMap,
+        "Dark Map": darkMap
+    };
+
     // Create overlay object to hold our overlay layer
     var overlayMaps = {
         Earthquakes: earthquakeData
     };
 
+
     // Create our map, giving it the streetmap and earthquakes layers to display on load
-    var myMap = L.map("map", {
+    var DisplayMap = L.map("map", {
         center: [
-            37.09, -95.71
+            20.09, 95.71
         ],
-        zoom: 5,
+        zoom: 3,
         layers: [streetMap, earthquakeData]
     });
+
+    // Create a layer control
+    // Pass in our baseMaps and overlayMaps
+    // Add the layer control to the map
+    L.control.layers(baseMaps, overlayMaps, {
+        collapsed: false
+    }).addTo(DisplayMap);
 }
