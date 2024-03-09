@@ -127,7 +127,7 @@ function createMap(earthquakeData) {
 
 
     // Create our map, giving it the streetmap and earthquakes layers to display on load
-    var DisplayMap = L.map("map", {
+    var displayMap = L.map("map", {
         center: [
             20.09, 95.71
         ],
@@ -140,5 +140,30 @@ function createMap(earthquakeData) {
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
-    }).addTo(DisplayMap);
+    }).addTo(displayMap);
+
+
+  // Create a legend to display info about our map
+  var legend = L.control({ 
+    position: 'bottomright' 
+  });
+
+  // When the layer control is added, insert a div with the class of "info legend"
+  legend.onAdd = function () {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        magnitude = [0, 1, 2, 3, 4, 5];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < magnitude.length; i++) {
+      div.innerHTML +=
+        '<span style="background:' + colors(magnitude[i] + 1) + '"></span> ' +
+        magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+  };
+
+  // Add the info legend to the map.
+  legend.addTo(displayMap);
 }
