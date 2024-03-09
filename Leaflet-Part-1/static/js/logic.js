@@ -4,6 +4,8 @@ var bDebug = true;
 // URL of the API endpoint to query
 const USGS_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
+// This requires an access token from mapbox.com as the API_KEY to work
+
 if (bDebug) { console.log(USGS_URL); }
 
 d3.json(USGS_URL).then((data) => {
@@ -12,6 +14,37 @@ d3.json(USGS_URL).then((data) => {
 
     processFeatures(data.features);
 });
+
+// Determine sizes for each markers on the map
+function size(magnitude) {
+    return magnitude * 40000;
+}
+
+// Loop thru the features and create one marker for each place object
+function colors(magnitude) {
+    var color = "";
+    if (magnitude <= 1) {
+        return color = "#83FF00";
+    }
+    else if (magnitude <= 2) {
+        return color = "#FFEC00";
+    }
+    else if (magnitude <= 3) {
+        return color = "#ffbf00";
+    }
+    else if (magnitude <= 4) {
+        return color = "#ff8000";
+    }
+    else if (magnitude <= 5) {
+        return color = "#FF4600";
+    }
+    else if (magnitude > 5) {
+        return color = "#FF0000";
+    }
+    else {
+        return color = "#ff00bf";
+    }
+}
 
 function processFeatures(data) {
 
@@ -22,14 +55,41 @@ function processFeatures(data) {
         console.log(data[0].properties.mag);
     }
 
+    // Define a function that will show the information for each feature
+    function onFeatureDisplay(feature, layer) {
+        layer.bindPopup("<h3>" + feature.properties.place +
+            "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
+            "<hr> <p> Earthquake Magnitude: " + feature.properties.mag + "</p>"
+        )
+    }
 
-    createMap(data)
+    var earthquakeData = L.geoJSON(data, {
+
+        onEachFeature: onFeatureDisplay,
+
+        // Create a GeoJSON layer containing the features array on the earthquakeData object
+        // Run the onEachFeature function once for each piece of data in the array
+        pointToLayer: function (feature, coordinates) {
+            // Determine Marker Colors, Size, and Opacity for each earthquake.
+            var geoMarkers = {
+                radius: size(feature.properties.mag),
+                fillColor: colors(feature.properties.mag),
+                fillOpacity: 0.30,
+                stroke: true,
+                weight: 1
+            }
+            return L.circle(coordinates, geoMarkers);
+        }
+    });
+
+
+    createMap(earthquakeData)
 }
 
-function createMap(data) {
+function createMap(earthquakeData) {
 
     // Define streetmap layer
-    var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    var streetMap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
         tileSize: 512,
         maxZoom: 18,
@@ -38,12 +98,18 @@ function createMap(data) {
         accessToken: API_KEY
     });
 
+
+    // Create overlay object to hold our overlay layer
+    var overlayMaps = {
+        Earthquakes: earthquakeData
+    };
+
     // Create our map, giving it the streetmap and earthquakes layers to display on load
     var myMap = L.map("map", {
         center: [
             37.09, -95.71
         ],
         zoom: 5,
-        layers: [outdoormap]
+        layers: [streetMap, earthquakeData]
     });
 }
