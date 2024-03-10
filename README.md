@@ -9,17 +9,23 @@ The USGS is interested in building a new set of tools that will allow them to vi
 **Part 1: Create the Earthquake Visualisation**
 
 This part is in the Leaflet-Part-1 folder in the repository and is completely self-contained.
-A GEOJSON file is loaded from the USGS.GOV website.
-The file is then processed and displayed on an OpenStreetMap map using the Mapbox API.
-There are there are controls for zoom and to choose the different lays to display on the map
 
+* A GEOJSON file is loaded from the USGS.GOV website using the D3 library.
+* The file is then processed and displayed on an OpenStreetMap map using the Mapbox API using the Leaflet library.
+* There are there are controls for zoom and to choose the different layers to display on the map.
+* There is a legend to see the various magnitudes of the of the earthquakes.
 
+![Image of world map showing various earthquakes](/images/map-1.png "Map of part 1 of the challenge")
 
 **Part 2: Gather and Plot More Data (Optional with no extra points earning)**
 
 This part is in the Leaflet-Part-2 folder in the repository and is completely self-contained.
 
-## 
+* A copy of part 1.
+* Loaded a GEOJSON taken from https://github.com/fraxen/tectonicplates showing the tectonic plates
+* Added an option to change the visibility of the layer.
+
+![Image of world map showing various earthquakes](/images/map-2.png "Map of part 2 of the challenge")
 
 ---
 Student Tyson Horsewell
