@@ -17,6 +17,10 @@ This part is in the Leaflet-Part-1 folder in the repository and is completely se
 
 ![Image of world map showing various earthquakes](/images/map-1.png "Map of part 1 of the challenge")
 
+The following shows what happens when an earthquake area is clicked:
+
+![Image of world map showing what happens when an earthquake area is clicked](/images/map-1-click.png "Map of part 1 of the challenge")
+
 **Part 2: Gather and Plot More Data (Optional with no extra points earning)**
 
 This part is in the Leaflet-Part-2 folder in the repository and is completely self-contained.
@@ -26,6 +30,10 @@ This part is in the Leaflet-Part-2 folder in the repository and is completely se
 * Added an option to change the visibility of the layer.
 
 ![Image of world map showing various earthquakes](/images/map-2.png "Map of part 2 of the challenge")
+
+The following shows what happens when an tectonic plate area is clicked:
+
+![Image of world map showing what happens when an earthquake area is clicked](/images/map-2-click.png "Map of part 1 of the challenge")
 
 ---
 Student Tyson Horsewell
