@@ -6,6 +6,8 @@ The USGS is interested in building a new set of tools that will allow them to vi
 
 ## Deliverables
 
+I've used https://mapbox.com in the project and an API key is required which doesn't cost money but requires an API_KEY which is in the config.js of each Leaflet-Part folder. The public key is free to use. This does use the https://openstreetmap.com maps.
+
 **Part 1: Create the Earthquake Visualisation**
 
 This part is in the Leaflet-Part-1 folder in the repository and is completely self-contained.

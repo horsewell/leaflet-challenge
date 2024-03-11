@@ -4,7 +4,7 @@ var bDebug = true;
 // URL of the API endpoint to query
 const USGS_URL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
-// This requires an access token from mapbox.com as the API_KEY to work
+// This requires an access token from mapbox.com as the API_KEY to work from https://mapbox.com
 
 if (bDebug) { console.log(USGS_URL); }
 
